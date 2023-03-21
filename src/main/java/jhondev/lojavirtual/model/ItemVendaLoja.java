@@ -2,7 +2,6 @@ package jhondev.lojavirtual.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -15,28 +14,27 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "nota_item_produto")
-@SequenceGenerator(name = "seq_nota_item_produto", sequenceName = "seq_nota_item_produto", allocationSize = 1, initialValue = 1)
-public class NotaItemProduto implements Serializable {
+@Table(name = "item_venda_loja")
+@SequenceGenerator(name = "seq_item_venda_loja", sequenceName = "seq_item_venda_loja", allocationSize = 1, initialValue = 1)
+public class ItemVendaLoja implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_nota_item_produto")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_item_venda_loja")
 	private Long id;
 	
-	@Column(nullable = false)
 	private Double quantidade;
-				
-	@ManyToOne
-	@JoinColumn(name = "nota_fiscal_compra_id", nullable = false,
-	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "nota_fiscal_compra_fk"))
-	private NotaFiscalCompra notaFiscalCompra;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "produto_id", nullable = false,
 	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "produto_fk"))
 	private Produto produto;
+	
+	@ManyToOne
+	@JoinColumn(name = "venda_compraLoja_virt_id", nullable = false,
+	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compraLoja_virt_fk"))
+	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
 
 	public Long getId() {
 		return id;
@@ -54,20 +52,20 @@ public class NotaItemProduto implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public NotaFiscalCompra getNotaFiscalCompra() {
-		return notaFiscalCompra;
-	}
-
-	public void setNotaFiscalCompra(NotaFiscalCompra notaFiscalCompra) {
-		this.notaFiscalCompra = notaFiscalCompra;
-	}
-
 	public Produto getProduto() {
 		return produto;
 	}
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public VendaCompraLojaVirtual getVendaCompraLojaVirtual() {
+		return vendaCompraLojaVirtual;
+	}
+
+	public void setVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) {
+		this.vendaCompraLojaVirtual = vendaCompraLojaVirtual;
 	}
 
 	@Override
@@ -86,7 +84,7 @@ public class NotaItemProduto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		NotaItemProduto other = (NotaItemProduto) obj;
+		ItemVendaLoja other = (ItemVendaLoja) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -94,7 +92,6 @@ public class NotaItemProduto implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 	
 }
